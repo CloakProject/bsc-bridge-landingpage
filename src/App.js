@@ -1,11 +1,17 @@
 import logo_white from "./logo_cloak_white.png";
 import logo_black from "./logo_cloak_black.png";
+import qrcode from "./qrcode.png";
+
 import Web3 from "web3";
+import { useState } from "react";
 import { useWallet, UseWalletProvider } from "use-wallet";
 
-import "./App.css";
+import "./App.scss";
+
+const tabs = ["Deposit CLOAK", "Withdraw wCLOAK", "History", "Farming"];
 
 function App() {
+  const [activeTab, setActiveTab] = useState(0);
   const wallet = useWallet();
   const blockNumber = wallet.getBlockNumber();
 
@@ -32,15 +38,85 @@ function App() {
     }
   };
 
-  console.log("====", wallet);
-
   return (
-    <div className="App">
-      <div className="App-header"></div>
-      <img width={200} className="cloak-logo" src={logo_black} />
-      <h1 className="title">Wrapped Navcoin Bridge</h1>
-      <button onClick={() => onConnect()}>CONNECT</button>
-    </div>
+    <>
+      {wallet.status === "connected" ? (
+        <>
+          <div className="App-header">
+            <img width={200} className="cloak-logo" src={logo_black} />
+            <h1>Wrapped Cloak Coin Bridge</h1>
+          </div>
+          <div className="tabs">
+            <ul className="tabs-nav">
+              {tabs.map((it, index) => {
+                return (
+                  <li className={activeTab === index ? "active" : ""} onClick={() => setActiveTab(index)}>
+                    <a>{it}</a>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="tabs-stage">
+              <div className="tabs-content" id="tab-1" style={{ display: activeTab === 0 ? "flex" : "none" }}>
+                <p>Your current balance : 0 wCLOAK</p>
+                <img width={128} className="cloak-qr" src={qrcode} />
+                <p>Your CLOAKcoin deposit address: </p>
+                <p>CkBHXydPVNRbBdEEG2KXWLFtQwbqc2odPS </p>
+                <p>Coins sent to this address will be swapped automatically to wCLOAK.</p>
+                <p>A fee will be deducted to cover the gas costs for minting.</p>
+                <p>
+                  Estimated gas cost: 1 CLOAK. Deposits smaller than this amount will be considered lost and won't be
+                  credited.
+                </p>
+
+                <a href="">Add token to Metamask</a>
+              </div>
+              <div className="tabs-content" id="tab-2" style={{ display: activeTab === 1 ? "flex" : "none" }}>
+                <p>Amount to swap</p>
+                {/* <input>wCLOAK amount</input> */}
+                <p>You will receive: 0 wCLOAK</p>
+                <p>Available balance: 0 wCLOAK</p>
+                <p>Withdraw to:</p>
+                {/* <input>CLOAK address</input> */}
+                <p>Address where you want to receive the CLOAK</p>
+                <button>SWAP</button>
+              </div>
+              <div className="tabs-content" id="tab-3" style={{ display: activeTab === 2 ? "flex" : "none" }}>
+                <p>No transactions yet.</p>
+              </div>
+              <div className="tabs-content" id="tab-4" style={{ display: activeTab === 3 ? "flex" : "none" }}>
+                <p>Coming soon ...</p>
+              </div>
+            </div>
+          </div>
+          <div className="App-footer">
+            <p>
+              Contract supply: <strong>0 wCLOAK</strong> - Cold storage supply: <strong>0 CLOAK</strong> - Pending
+              withdrawls from cold storage: <strong>0 CLOAK</strong>
+            </p>
+            <p>
+              Contract address: <strong>0x23853fde632616E7f3BBa4C7662b86A21A326A89</strong>
+            </p>
+            <p>
+              Network: <strong>Binance Smart Chain Testnet</strong>
+            </p>
+            <br />
+            <p>The CLOAK Core development team 2021 - Contact : info@cloakcoin.com</p>
+          </div>
+        </>
+      ) : (
+        <div className="App">
+          <div className="App-header"></div>
+          <img width={200} className="cloak-logo" src={logo_black} />
+          <h1 className="title">Wrapped Navcoin Bridge</h1>
+          <button onClick={() => onConnect()}>CONNECT</button>
+
+          <div className="App-footer">
+            <p style={{ fontStyle: "italic" }}>The CLOAK Core development team 2021 - Contact : info@cloakcoin.com</p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -49,7 +125,7 @@ export default () => (
     chainId={56}
     connectors={{
       // This is how connectors get configured
-      portis: { dAppId: "my-dapp-id-123-xyz" },
+      metamask: { dAppId: "my-dapp-id-123-xyz" },
     }}
   >
     <App />
