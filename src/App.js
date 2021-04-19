@@ -59,26 +59,38 @@ function App() {
             <div className="tabs-stage">
               <div className="tabs-content" id="tab-1" style={{ display: activeTab === 0 ? "flex" : "none" }}>
                 <p>Your current balance : 0 wCLOAK</p>
-                <img width={128} className="cloak-qr" src={qrcode} />
+                <img
+                  width={128}
+                  className="cloak-qr"
+                  src={qrcode}
+                  style={{ marginTop: "1rem", marginBottom: "1rem" }}
+                />
                 <p>Your CLOAKcoin deposit address: </p>
                 <p>CkBHXydPVNRbBdEEG2KXWLFtQwbqc2odPS </p>
-                <p>Coins sent to this address will be swapped automatically to wCLOAK.</p>
+                <p style={{ marginTop: "1rem" }}>Coins sent to this address will be swapped automatically to wCLOAK.</p>
                 <p>A fee will be deducted to cover the gas costs for minting.</p>
-                <p>
+                <p style={{ marginTop: "1rem" }}>
                   Estimated gas cost: 1 CLOAK. Deposits smaller than this amount will be considered lost and won't be
                   credited.
                 </p>
-
-                <a href="">Add token to Metamask</a>
+                <a href="" style={{ marginTop: "2rem" }}>
+                  Add token to Metamask
+                </a>
               </div>
               <div className="tabs-content" id="tab-2" style={{ display: activeTab === 1 ? "flex" : "none" }}>
                 <p>Amount to swap</p>
-                {/* <input>wCLOAK amount</input> */}
-                <p>You will receive: 0 wCLOAK</p>
-                <p>Available balance: 0 wCLOAK</p>
+                <input className="withdraw-input" placeholder={"wCLOAK amount"} />
+                <p>
+                  You will receive: <strong>0 wCLOAK</strong>
+                </p>
+                <p>
+                  Available balance: <strong>0 wCLOAK</strong>
+                </p>
+                <br />
                 <p>Withdraw to:</p>
-                {/* <input>CLOAK address</input> */}
+                <input className="withdraw-input" placeholder={"CLOAK address"} />
                 <p>Address where you want to receive the CLOAK</p>
+                <br />
                 <button>SWAP</button>
               </div>
               <div className="tabs-content" id="tab-3" style={{ display: activeTab === 2 ? "flex" : "none" }}>
@@ -101,18 +113,24 @@ function App() {
               Network: <strong>Binance Smart Chain Testnet</strong>
             </p>
             <br />
-            <p>The CLOAK Core development team 2021 - Contact : info@cloakcoin.com</p>
+            <p style={{ fontStyle: "italic", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span>The CLOAK Core development team 2021 - Contact : </span>
+              <a href="">&nbsp;info@cloakcoin.com</a>
+            </p>
           </div>
         </>
       ) : (
         <div className="App">
           <div className="App-header"></div>
           <img width={200} className="cloak-logo" src={logo_black} />
-          <h1 className="title">Wrapped Navcoin Bridge</h1>
+          <h2 className="title">Wrapped CLOAK coin Bridge</h2>
           <button onClick={() => onConnect()}>CONNECT</button>
 
           <div className="App-footer">
-            <p style={{ fontStyle: "italic" }}>The CLOAK Core development team 2021 - Contact : info@cloakcoin.com</p>
+            <p style={{ fontStyle: "italic", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span>The CLOAK Core development team 2021 - Contact : </span>
+              <a href="">&nbsp;info@cloakcoin.com</a>
+            </p>
           </div>
         </div>
       )}
