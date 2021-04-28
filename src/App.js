@@ -1,19 +1,16 @@
-import logo_white from "./logo_cloak_white.png";
-import logo_black from "./logo_cloak_black.png";
-import qrcode from "./qrcode.png";
-
 import Web3 from "web3";
 import { useState } from "react";
 import { useWallet, UseWalletProvider } from "use-wallet";
 
 import "./App.scss";
+import logo_black from "./img/logo_cloak_black.png";
+import qrcode from "./img/qrcode.png";
 
 const tabs = ["Deposit CLOAK", "Withdraw wCLOAK", "History", "Farming"];
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
   const wallet = useWallet();
-  const blockNumber = wallet.getBlockNumber();
 
   const onConnect = () => {
     console.log("OnConnected");
@@ -21,11 +18,10 @@ function App() {
       const web3 = new Web3(window.ethereum);
       try {
         window.ethereum.enable().then(function () {
-          console.log("test");
           wallet.connect();
         });
       } catch (e) {
-        // User has denied account access to DApp...
+        console.log("connection error");
       }
     }
     // Legacy DApp Browsers
